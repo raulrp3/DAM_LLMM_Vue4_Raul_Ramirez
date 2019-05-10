@@ -13,32 +13,44 @@
 		</ul>
 	</div>
 	<template id="charriot-template">
-		<li class="list-group-item">"{{charriot.name}}" charriot has {{charriot.horses}} horse(s)!</li>
+		<li class="list-group-item">"{{charriot.name}}" charriot has {{charriot.horses}} horse(s)!
+		<button class="btn btn-primary d-block mt-1" @click="pickCharriot">{{charriot.text_button}}</button>
+		</li>
 	</template>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
 <script>
 	Vue.component("charriot",{
 		props: ["charriot"],
-		template: "#charriot-template"
+		template: "#charriot-template",
+		methods: {
+			pickCharriot: function(event){
+				this.charriot.text_button = "Riding!";
+				event.target.disabled = true;
+			}
+		}
 	});
 	new Vue({
 		el: "#app",
 		data: {
 			charriots: [{
 				name: "Olympus",
-				horses: 4
+				horses: 4,
+				text_button: "Pick charriot"
 			},{
 				name: "Sagitta",
-				horses: 3
+				horses: 3,
+				text_button: "Pick charriot"
 			},{
 				name: "Icarus",
-				horses: 2
+				horses: 2,
+				text_button: "Pick charriot"
 			},{
 				name: "Abraxas",
-				horses: 1
-			}]
+				horses: 1,
+				text_button: "Pick charriot"
+			}],
 		}
-	})
+	});
 </script>
 </html>
