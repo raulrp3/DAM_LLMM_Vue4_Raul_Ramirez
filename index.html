@@ -9,24 +9,43 @@
 	<div id="app" class="container mt-2">
 		<h1 class="container">Charriot shoping</h1>
 		<ul class="list-group">
-			<charriot v-for="charriot in charriots" :charriot="charriot"></charriot>
+			<charriot v-for="charriot in charriots" :charriot="charriot" :picked="picked"></charriot>
 		</ul>
 	</div>
 	<template id="charriot-template">
 		<li class="list-group-item">"{{charriot.name}}" charriot has {{charriot.horses}} horse(s)!
-		<button class="btn btn-primary d-block mt-1" @click="pickCharriot">{{charriot.text_button}}</button>
+		<button class="btn btn-primary d-block mt-1" @click="pickCharriot">{{textButton}}</button>
 		</li>
 	</template>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
 <script>
 	Vue.component("charriot",{
-		props: ["charriot"],
+		props: ["charriot","picked"],
 		template: "#charriot-template",
 		methods: {
 			pickCharriot: function(event){
-				this.charriot.text_button = "Riding!";
-				event.target.disabled = true;
+				this.picked = this.charriot;
+			}
+		},
+		computed: {
+			textButton: function(){
+				let text = "";
+				if (!this.picked){
+					text = "Picked charriot"
+				}else{
+					if (this.picked == this.charriot){
+						text = "Riding!";
+					}else{
+						if (this.picked.horses < this.charriot.horses){
+							text = "Hire Horses";
+						}else{
+							text = "Dimiss Horses";
+						}
+					}
+				}
+
+				return text;
 			}
 		}
 	});
@@ -36,20 +55,17 @@
 			charriots: [{
 				name: "Olympus",
 				horses: 4,
-				text_button: "Pick charriot"
 			},{
 				name: "Sagitta",
 				horses: 3,
-				text_button: "Pick charriot"
 			},{
 				name: "Icarus",
 				horses: 2,
-				text_button: "Pick charriot"
 			},{
 				name: "Abraxas",
 				horses: 1,
-				text_button: "Pick charriot"
 			}],
+			picked: null
 		}
 	});
 </script>
