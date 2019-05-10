@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>EJERCICIOS VUE</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div id="app" class="container mt-2">
+		<h1 class="container">Charriot shoping</h1>
+		<ul class="list-group">
+			<charriot v-for="charriot in charriots" :charriot="charriot"></charriot>
+		</ul>
+	</div>
+	<template id="charriot-template">
+		<li class="list-group-item">"{{charriot.name}}" charriot has {{charriot.horses}} horse(s)!</li>
+	</template>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
+<script>
+	Vue.component("charriot",{
+		props: ["charriot"],
+		template: "#charriot-template"
+	});
+	new Vue({
+		el: "#app",
+		data: {
+			charriots: [{
+				name: "Olympus",
+				horses: 4
+			},{
+				name: "Sagitta",
+				horses: 3
+			},{
+				name: "Icarus",
+				horses: 2
+			},{
+				name: "Abraxas",
+				horses: 1
+			}]
+		}
+	})
+</script>
+</html>
