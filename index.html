@@ -9,12 +9,12 @@
 	<div id="app" class="container mt-2">
 		<h1 class="container">Charriot shoping</h1>
 		<ul class="list-group">
-			<charriot v-for="charriot in charriots" :charriot="charriot" :picked="picked"></charriot>
+			<charriot v-for="charriot in charriots" :charriot="charriot" :picked.sync="picked"></charriot>
 		</ul>
 	</div>
 	<template id="charriot-template">
 		<li class="list-group-item">"{{charriot.name}}" charriot has {{charriot.horses}} horse(s)!
-		<button class="btn btn-primary d-block mt-1" @click="pickCharriot">{{textButton}}</button>
+		<button class="btn btn-primary d-block mt-1" @click="pickCharriot" :disabled="isDisabled">{{textButton}}</button>
 		</li>
 	</template>
 </body>
@@ -30,22 +30,26 @@
 		},
 		computed: {
 			textButton: function(){
-				let text = "";
-				if (!this.picked){
-					text = "Picked charriot"
-				}else{
+				let text = "Picked charriot";
+				if (this.picked){
 					if (this.picked == this.charriot){
 						text = "Riding!";
+					}else if(this.charriot.horses > this.picked.horses){
+						text = "Hire Horses";
 					}else{
-						if (this.picked.horses < this.charriot.horses){
-							text = "Hire Horses";
-						}else{
-							text = "Dimiss Horses";
-						}
+						text = "Dimiss Horses";
 					}
 				}
 
 				return text;
+			},
+			isDisabled : function(){
+				let disabled = false;
+				if (this.picked){
+					disabled = this.picked == this.charriot;
+				}
+
+				return disabled;
 			}
 		}
 	});
